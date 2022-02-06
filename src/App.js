@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+
+import Loader from './components/Loader'
+import { useGet } from './utils'
 
 function App() {
+  const { data, reqStatus } = useGet('list/all')
+  const [filter, setFilter] = React.useState('')
+
+  const filteredList = filter.length > 0 ? data.filter( item => item.toLowerCase().includes(filter.toLowerCase())) : data
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='search'>
+        <label htmlFor='searchInput'>Search by breed</label>
+        <input id='searchInput' value={filter} onChange={e => setFilter(e.target.value)} placeholder='Dog breed'/>
+      </div>
+      <Loader status={reqStatus}>
+        {filteredList.map(breed => (
+          <div>
+            {breed}
+          </div>
+        ))}
+      </Loader>
     </div>
   );
 }
