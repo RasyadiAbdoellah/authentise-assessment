@@ -8,13 +8,19 @@ function App() {
   const { data, reqStatus } = useGet("breeds/list");
   const [filter, setFilter] = React.useState("");
   const [collection, setCollection] = React.useState([]);
-  console.log(
-    `rendered. ReqStatus: ${reqStatus} \n Data: ${data} \n Filter: ${filter} \n Collection: ${collection}`
-  );
+
   const filteredList =
     filter.length > 0
       ? data.filter((item) => item.toLowerCase().includes(filter.toLowerCase()))
       : data;
+
+  function addToCollection(breed) {
+    // append breed to collection if it doesn't exist, else return same object
+    setCollection((prevState) =>
+      !prevState.includes(breed) ? [...prevState, breed] : prevState
+    );
+  }
+
   return (
     <>
       <div id="list">
@@ -26,21 +32,19 @@ function App() {
             onChange={(e) => setFilter(e.target.value)}
             placeholder="Dog breed"
           />
+          <button
+            onClick={() => {
+              const i = Math.floor(Math.random() * filteredList.length);
+              addToCollection(filteredList[i]);
+            }}
+          >
+            Add random breed
+          </button>
         </div>
         <div className="list-content">
           <Loader status={reqStatus}>
             {filteredList.map((breed, i) => (
-              <div
-                key={`${breed}_${i}`}
-                onClick={() => {
-                  // append breed to collection if it doesn't exist, else return same object
-                  setCollection((prevState) =>
-                    !prevState.includes(breed)
-                      ? [...prevState, breed]
-                      : prevState
-                  );
-                }}
-              >
+              <div key={`${breed}_${i}`} onClick={() => addToCollection(breed)}>
                 {breed}
               </div>
             ))}
@@ -49,18 +53,20 @@ function App() {
       </div>
       <div id="collection">
         <h1>My Collection</h1>
-        {collection.map((breed, i) => (
-          <Card
-            breed={breed}
-            remover={() => {
-              setCollection((prevState) => {
-                const newState = [...prevState];
-                newState.splice(i, 1);
-                return newState;
-              });
-            }}
-          />
-        ))}
+        <div className="collection-content">
+          {collection.map((breed, i) => (
+            <Card
+              breed={breed}
+              remover={() => {
+                setCollection((prevState) => {
+                  const newState = [...prevState];
+                  newState.splice(i, 1);
+                  return newState;
+                });
+              }}
+            />
+          ))}
+        </div>
       </div>
     </>
   );
