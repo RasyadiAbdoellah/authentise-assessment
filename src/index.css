@@ -12,6 +12,13 @@ code {
     monospace;
 }
 
+button {
+  display: block;
+  padding: 5px 10px;
+  margin-top: 10px;
+  width:fit-content;
+}
+
 #root {
   display: flex;
 }
@@ -34,12 +41,35 @@ code {
 }
 
 .list-search {
-  padding: 10px;
+  padding: 20px 10px;
 }
+
+.list-search>* {
+  margin-right: 5px;
+}
+
+
 
 .list-content {
   padding: 10px;
   overflow-y: auto;
+}
+
+.list-content>div {
+  cursor: pointer;
+  padding: 10px;
+}
+
+.list-content>div:hover {
+  background-color: #dfdfdf;
+}
+
+.list-content :nth-child(even) {
+  background-color: #eaeaea;
+}
+
+.list-content :nth-child(odd) {
+  background-color: #f3f3f3;
 }
 
 .collection-content {
@@ -56,6 +86,9 @@ code {
 
 .card button {
   display: inline-block;
+  margin-right: 5px;
+  margin-top: 0;
+  margin-bottom: 10px;
 }
 
 .card img {
