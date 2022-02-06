@@ -34,8 +34,8 @@ function App() {
           />
           <button
             onClick={() => {
-              const i = Math.floor(Math.random() * filteredList.length);
-              addToCollection(filteredList[i]);
+              const i = Math.floor(Math.random() * data.length);
+              addToCollection(data[i]);
             }}
           >
             Add random breed
