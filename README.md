@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-To install locally, first run `yarn install`. Once installed, the below commands are available
+To install locally, `git clone` the repo then run `yarn install`. Once installed, the below commands are available
 
 - `yarn start` \
 Runs the app in the development mode.\
